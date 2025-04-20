@@ -1,4 +1,4 @@
-region = "ap-south-1" 
+region = "us-east-1" 
 add_user_zip_file = "../Infra/add_user.zip"
 get_user_zip_file = "../Infra/get_user.zip"
 
