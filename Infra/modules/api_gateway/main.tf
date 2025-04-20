@@ -19,10 +19,15 @@ resource "aws_api_gateway_method" "get_users_method" {
   resource_id   = aws_api_gateway_resource.users_resource.id
   http_method   = "GET"
   authorization = "NONE"
+}
 
-  integration_type = "AWS_PROXY"
+resource "aws_api_gateway_integration" "get_users_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.serverless_rest_api.id
+  resource_id             = aws_api_gateway_resource.users_resource.id
+  http_method             = aws_api_gateway_method.get_users_method.http_method
+  type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri = var.get_users_lambda_arn
+  uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${var.get_users_lambda_arn}/invocations"
 }
 
 # Create a stage for the deployment
