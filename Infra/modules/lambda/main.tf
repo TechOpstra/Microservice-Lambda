@@ -6,7 +6,7 @@ resource "aws_lambda_function" "add_sample_data" {
   role          = var.lambda_execution_role_arn
   handler       = "m1-add-sample-data.lambda_handler"
 
-  filename      = var.lambda_zip_file
+  filename      = var.add_user_zip_file
 
   environment {
     variables = {
@@ -21,7 +21,7 @@ resource "aws_lambda_function" "get_users" {
   role          = var.lambda_execution_role_arn
   handler       = "get-users.lambda_handler"
 
-  filename      = var.lambda_zip_file
+  filename      = var.get_user_zip_file
 
   environment {
     variables = {
