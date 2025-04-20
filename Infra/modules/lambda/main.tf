@@ -2,7 +2,7 @@
 
 resource "aws_lambda_function" "add_sample_data" {
   function_name = "m1-add-sample-data"
-  runtime       = "python3.8"
+  runtime       = "python3.10"
   role          = var.lambda_execution_role_arn
   handler       = "m1-add-sample-data.lambda_handler"
 
@@ -17,7 +17,7 @@ resource "aws_lambda_function" "add_sample_data" {
 
 resource "aws_lambda_function" "get_users" {
   function_name = "get-users"
-  runtime       = "python3.8"
+  runtime       = "python3.10"
   role          = var.lambda_execution_role_arn
   handler       = "get-users.lambda_handler"
 
