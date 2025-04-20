@@ -3,7 +3,7 @@
 variable "region" {
   description = "AWS region to deploy the resources"
   type        = string
-  default     = "us-east-1"
+  default     = "ap-south-1"
 }
 
 # Lambda function zip file paths (for both add and get users functions)
