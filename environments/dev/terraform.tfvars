@@ -1,6 +1,6 @@
 region = "ap-south-1" 
-add_user_zip_file = "Infra/add_user.zip"
-get_user_zip_file = "Infra/get_user.zip"
+add_user_zip_file = "../Infra/add_user.zip"
+get_user_zip_file = "../Infra/get_user.zip"
 
 dynamodb_table_name       = "serverless_workshop_intro"
 dynamodb_hash_key         = "_id"
