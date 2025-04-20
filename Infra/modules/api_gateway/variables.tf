@@ -1,4 +1,7 @@
-# modules/api_gateway/variables.tf
+variable "region" {
+  description = "aws region name"
+  type        = string
+}
 
 variable "api_name" {
   description = "The name of the API Gateway"
