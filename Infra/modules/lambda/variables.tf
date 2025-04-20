@@ -5,7 +5,13 @@ variable "lambda_execution_role_arn" {
   type        = string
 }
 
-variable "lambda_zip_file" {
+variable "add_user_zip_file" {
+  description = "The path to the Lambda function zip file"
+  type        = string
+}
+
+
+variable "get_user_zip_file" {
   description = "The path to the Lambda function zip file"
   type        = string
 }
