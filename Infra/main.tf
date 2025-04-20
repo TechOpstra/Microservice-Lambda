@@ -24,6 +24,7 @@ module "lambda" {
 # API Gateway module
 module "api_gateway" {
   source                = "./modules/api_gateway"
+  region                = var.region
   api_name              = var.api_name
   api_description       = var.api_description
   get_users_lambda_arn  = module.lambda.get_users_lambda_arn
