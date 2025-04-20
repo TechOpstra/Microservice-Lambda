@@ -7,9 +7,16 @@ variable "region" {
 }
 
 # Lambda function zip file paths (for both add and get users functions)
-variable "lambda_zip_file" {
+variable "add_user_zip_file" {
   description = "Path to the Lambda function zip file"
   type        = string
+  default     = "add_user.zip"
+}
+
+variable "get_user_zip_file" {
+  description = "Path to the Lambda function zip file"
+  type        = string
+  default     = "get_user.zip"
 }
 
 # DynamoDB Table Configuration
