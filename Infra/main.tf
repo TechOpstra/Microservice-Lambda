@@ -1,8 +1,3 @@
-# Infra/main.tf
-
-provider "aws" {
-  region = var.region
-}
 
 # DynamoDB module
 module "dynamodb" {
