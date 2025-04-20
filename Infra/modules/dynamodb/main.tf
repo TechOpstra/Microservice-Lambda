@@ -19,7 +19,20 @@ resource "aws_dynamodb_table" "serverless_workshop_intro" {
     name = "FullName"
     type = "S"
   }
+
+global_secondary_index {
+    name               = "UseridIndex"
+    hash_key           = "Userid"
+    projection_type    = "ALL"
+  }
+
+  global_secondary_index {
+    name               = "FullNameIndex"
+    hash_key           = "FullName"
+    projection_type    = "ALL"
+  }
 }
+
 
 output "table_name" {
   value = aws_dynamodb_table.serverless_workshop_intro.name
