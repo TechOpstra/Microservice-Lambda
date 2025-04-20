@@ -1,16 +1,19 @@
 # modules/api_gateway/main.tf
 
+# Create the API Gateway Rest API
 resource "aws_api_gateway_rest_api" "serverless_rest_api" {
   name        = var.api_name
   description = var.api_description
 }
 
+# Create the 'users' resource under the root path
 resource "aws_api_gateway_resource" "users_resource" {
   rest_api_id = aws_api_gateway_rest_api.serverless_rest_api.id
   parent_id   = aws_api_gateway_rest_api.serverless_rest_api.root_resource_id
   path_part   = "users"
 }
 
+# Define the 'GET' method for the /users resource
 resource "aws_api_gateway_method" "get_users_method" {
   rest_api_id   = aws_api_gateway_rest_api.serverless_rest_api.id
   resource_id   = aws_api_gateway_resource.users_resource.id
@@ -24,11 +27,22 @@ resource "aws_api_gateway_method" "get_users_method" {
   }
 }
 
-resource "aws_api_gateway_deployment" "serverless_api_deployment" {
-  rest_api_id = aws_api_gateway_rest_api.serverless_rest_api.id
-  stage_name  = "v1"
+# Create a stage for the deployment
+resource "aws_api_gateway_stage" "serverless_api_stage" {
+  stage_name    = "v1"
+  rest_api_id   = aws_api_gateway_rest_api.serverless_rest_api.id
+  deployment_id = aws_api_gateway_deployment.serverless_api_deployment.id
 }
 
+# Deploy the API
+resource "aws_api_gateway_deployment" "serverless_api_deployment" {
+  rest_api_id = aws_api_gateway_rest_api.serverless_rest_api.id
+  triggers    = {
+    redeploy = "${timestamp()}"
+  }
+}
+
+# Add permission for API Gateway to invoke the Lambda function
 resource "aws_lambda_permission" "allow_api_gateway_to_invoke_lambda" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
@@ -36,6 +50,7 @@ resource "aws_lambda_permission" "allow_api_gateway_to_invoke_lambda" {
   principal     = "apigateway.amazonaws.com"
 }
 
+# Output the API invoke URL
 output "api_invoke_url" {
-  value = "${aws_api_gateway_rest_api.serverless_rest_api.endpoint}/v1/users"
+  value = "${aws_api_gateway_stage.serverless_api_stage.invoke_url}/users"
 }
