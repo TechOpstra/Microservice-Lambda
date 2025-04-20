@@ -18,11 +18,11 @@ module "iam" {
   role_name = var.iam_role_name
 }
 
-# Lambda module for both add and get users functions
 module "lambda" {
   source                = "./modules/lambda"
   lambda_execution_role_arn = module.iam.lambda_execution_role_arn
-  lambda_zip_file       = var.lambda_zip_file
+  add_user_zip_file     = var.add_user_zip_file
+  get_user_zip_file     = var.get_user_zip_file
   dynamodb_table_name   = module.dynamodb.table_name
 }
 
