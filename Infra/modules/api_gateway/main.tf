@@ -30,16 +30,24 @@ resource "aws_api_gateway_integration" "get_users_integration" {
   uri                     = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${var.get_users_lambda_arn}/invocations"
 }
 
-# Create a stage for the deployment 
 resource "aws_api_gateway_stage" "serverless_api_stage" {
   stage_name    = "v1"
   rest_api_id   = aws_api_gateway_rest_api.serverless_rest_api.id
   deployment_id = aws_api_gateway_deployment.serverless_api_deployment.id
 
-  logging_level = "INFO"  # Enable logging level
-  data_trace_enabled = true  # Optional, enables full request/response logging
+  access_log_settings {
+    destination_arn = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_account_id.current.id}:log-group:/aws/api-gateway/${aws_api_gateway_rest_api.serverless_rest_api.name}"
+    format          = "$context.requestId $context.identity.sourceIp $context.httpMethod $context.status $context.protocol $context.responseLength $context.requestTime"
+  }
+
+  # Optionally, you can add a description for the stage
+  description = "Stage for v1 of the API"
+}
+
+resource "aws_api_gateway_account" "api_gateway_account" {
   cloudwatch_role_arn = aws_iam_role.api_gateway_cloudwatch_logs.arn
 }
+
 
 # Deploy the API
 resource "aws_api_gateway_deployment" "serverless_api_deployment" {
