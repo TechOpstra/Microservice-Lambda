@@ -35,6 +35,10 @@ resource "aws_api_gateway_stage" "serverless_api_stage" {
   stage_name    = "v1"
   rest_api_id   = aws_api_gateway_rest_api.serverless_rest_api.id
   deployment_id = aws_api_gateway_deployment.serverless_api_deployment.id
+
+  logging_level = "INFO"  # Enable logging level
+  data_trace_enabled = true  # Optional, enables full request/response logging
+  cloudwatch_role_arn = aws_iam_role.api_gateway_cloudwatch_logs.arn
 }
 
 # Deploy the API
