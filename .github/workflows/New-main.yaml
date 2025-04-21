@@ -99,9 +99,5 @@ jobs:
           terraform apply -var-file="../environments/dev/terraform.tfvars" -auto-approve
         working-directory: ./Infra
 
-      - name: Upload Private Key to S3
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success() 
-        run: |
-          aws s3 cp ./Infra/modules/ec2/private_key.pem s3://techopsbucket123/private-key.pem
     
       
